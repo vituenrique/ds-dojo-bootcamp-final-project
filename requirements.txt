@@ -1,0 +1,23 @@
+# langchain
+langchain-core==0.3.64
+langchain-openai==0.3.21
+langchain-community==0.3.24
+langchain-experimental==0.3.4
+langchain-text-splitters==0.3.8
+langchain-anthropic==0.3.15
+langgraph==0.5.3
+
+
+# Core Dependencies
+tiktoken==0.9.0
+faiss-cpu==1.11.0
+
+# Search feature
+tavily-python==0.7.1
+langchain-tavily==0.2.11
+
+# Other tools
+pypdf==6.0.0
+
+streamlit
+wikipedia>=1.4.0
