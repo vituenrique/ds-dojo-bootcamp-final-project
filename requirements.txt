@@ -21,3 +21,4 @@ pypdf==6.0.0
 
 streamlit
 wikipedia>=1.4.0
+arxiv==2.2.0

@@ -6,11 +6,15 @@ from langchain_tavily import TavilySearch
 from langgraph.prebuilt import create_react_agent
 from langchain_community.callbacks.streamlit import StreamlitCallbackHandler
 
+from langchain_community.tools import WikipediaQueryRun
+from langchain_community.utilities import WikipediaAPIWrapper
+from langchain_community.utilities import ArxivAPIWrapper
+from langchain.agents import Tool
 
 st.set_page_config(page_title="ChatWeb", page_icon="🌐")
 st.header("Chatbot with Web Browser Access")
 
-st.write("Equipped with Tavily search agent only")
+st.write("Equipped with Tavily search agent, Wikipedia, and Arxiv tools.")
 
 class ChatbotTools:
     def __init__(self):
@@ -39,7 +43,19 @@ class ChatbotTools:
             tavily_api_key=st.session_state["TAVILY_API_KEY"],
         )
 
-        tools = [tavily_search]
+        wiki_agent = Tool(
+            name="wikipedia",
+            func=WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper()).run,
+            description="Search Wikipedia for specific topics, people, or events.",
+        )
+
+        arxiv = Tool(
+            name="arxiv",
+            func=ArxivAPIWrapper().run,
+            description="Search research papers, scientific articles, and preprints.",
+        )
+
+        tools = [tavily_search, wiki_agent, arxiv]
 
         llm = ChatOpenAI(model=self.openai_model, streaming=True)
         agent = create_react_agent(llm, tools)
